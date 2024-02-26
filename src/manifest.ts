@@ -1,12 +1,20 @@
 import packageJson from "../package.json";
 import { ManifestType } from "@src/manifest-type";
 
-const manifest: ManifestType = {
+export enum BrowserTarget {
+  Chrome = "chrome",
+  Firefox = "firefox",
+}
+
+const manifest = (target: BrowserTarget): ManifestType => ({
   manifest_version: 3,
   name: packageJson.displayName,
   version: packageJson.version,
   description: packageJson.description,
-  background: { service_worker: "src/pages/background/index.js", type: "module" },
+  background:
+    target === BrowserTarget.Chrome
+      ? { service_worker: "src/pages/background/index.js", type: "module" }
+      : { scripts: ["src/pages/background/index.js"], type: "module" },
   host_permissions: ["*://*/*"],
   action: {
     default_title: packageJson.displayName,
@@ -18,9 +26,7 @@ const manifest: ManifestType = {
   },
   content_scripts: [
     {
-      matches: [
-        "<all_urls>",
-      ],
+      matches: ["<all_urls>"],
       js: ["src/pages/content/index.js"],
     },
   ],
@@ -48,6 +54,6 @@ const manifest: ManifestType = {
     },
   ],
   permissions: ["storage", "tabs", "alarms"],
-};
+});
 
 export default manifest;

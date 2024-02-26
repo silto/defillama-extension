@@ -7,7 +7,9 @@
   "displayName": "DefiLlama",
   "scripts": {
     "dev": "rm -f vite.config.ts.*.mjs && nodemon",
+    "dev:firefox": "BROWSER_TARGET=firefox yarn dev",
     "build": "tsc --noEmit && vite build",
+    "build:firefox": "BROWSER_TARGET=firefox yarn build",
     "zip": "web-ext build -s dist -a packed -n extension.zip -o",
     "prep": "rm -f vite.config.ts.*.mjs && rm -rf dist packed && yarn build && yarn zip"
   },

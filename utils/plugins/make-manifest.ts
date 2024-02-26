@@ -1,14 +1,13 @@
 import * as fs from "fs";
 import * as path from "path";
 import colorLog from "../log";
-import manifest from "../../src/manifest";
+import manifest, { BrowserTarget } from "../../src/manifest";
 import { PluginOption } from "vite";
-
+export { BrowserTarget };
 const { resolve } = path;
 
 const outDir = resolve(__dirname, "..", "..", "public");
-
-export default function makeManifest(): PluginOption {
+export default function makeManifest(target: BrowserTarget): PluginOption {
   return {
     name: "make-manifest",
     buildEnd() {
@@ -18,7 +17,7 @@ export default function makeManifest(): PluginOption {
 
       const manifestPath = resolve(outDir, "manifest.json");
 
-      fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+      fs.writeFileSync(manifestPath, JSON.stringify(manifest(target), null, 2));
 
       colorLog(`Manifest file copy complete: ${manifestPath}`, "success");
     },

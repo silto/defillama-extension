@@ -4,7 +4,9 @@
   "version": "0.0.4",
   "description": "DefiLlama Extension",
   "background": {
-    "service_worker": "src/pages/background/index.js",
+    "scripts": [
+      "src/pages/background/index.js"
+    ],
     "type": "module"
   },
   "host_permissions": [

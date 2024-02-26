@@ -16,6 +16,10 @@ export interface ManifestType {
         service_worker: string;
         type?: "module";
       }
+    | {
+        scripts: string[];
+        type?: "module";
+      }
     | undefined;
   chrome_settings_overrides?:
     | {
